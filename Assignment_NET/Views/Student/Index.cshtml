@@ -1,0 +1,110 @@
+﻿@model PagedList.IPagedList<Assignment_NET.Models.Student>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "List Student";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var limit = ViewBag.limit is int ? (int)ViewBag.limit : 10;
+}
+
+<h2>Index</h2>
+@{
+    <div class="alert alert-success">@TempData["message"]</div>
+}
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<input type="text" name="datefilter" value="" class="form-control"  style="margin-bottom:20px"/>
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Image
+        </th>
+        <th>
+            Node
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            Birthday
+        </th>
+        <th>
+            CreatedAt
+        </th>
+        <th>
+            UpdatedAt
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                <img width="100" height="100" src="@(item.Image)" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Node)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Birthday)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedAt)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.RollNumber }) |
+                @Html.ActionLink("Details", "Details", new { id = item.RollNumber }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.RollNumber })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+    
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, limit = limit }))
+
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('input[name="datefilter"]').daterangepicker({
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear'
+                }
+            });
+            $('input[name="datefilter"]').on('apply.daterangepicker', function (ev, picker) {
+                alert(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+            });
+            //$('input[name="datefilter"]').on('cancel.daterangepicker', function (ev, picker) {
+            //    $(this).val('');
+            //});
+        });
+    </script>
+}

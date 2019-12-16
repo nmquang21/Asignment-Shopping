@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <IisApp path="E:\APTECH\Sem3\ASP.NET MVC\Assignment_NET\Assignment_NET\obj\Release\Package\PackageTmp" />
+  <setAcl path="E:\APTECH\Sem3\ASP.NET MVC\Assignment_NET\Assignment_NET\obj\Release\Package\PackageTmp" setAclResourceType="Directory" />
+  <setAcl path="E:\APTECH\Sem3\ASP.NET MVC\Assignment_NET\Assignment_NET\obj\Release\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
+</sitemanifest>

@@ -1,0 +1,206 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <title>ListAshop</title>
+    <!-- Bootstrap CSS -->
+
+    <link href="~/Content/homepage/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/homepage/vendors/linericon/style.css" rel="stylesheet" />
+    <link href="~/Content/homepage/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/homepage/vendors/owl-carousel/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/Content/homepage/vendors/lightbox/simpleLightbox.css" rel="stylesheet" />
+    <link href="~/Content/homepage/vendors/nice-select/css/nice-select.css" rel="stylesheet" />
+    <link href="~/Content/homepage/vendors/animate-css/animate.css" rel="stylesheet" />
+    <link href="~/Content/homepage/vendors/jquery-ui/jquery-ui.css" rel="stylesheet" />
+
+    <!-- main css -->
+    
+    <link href="~/Content/homepage/css/style.css" rel="stylesheet" />
+    <link href="~/Content/homepage/css/responsive.css" rel="stylesheet" />
+</head>
+<body>
+
+    <!--================Header Menu Area =================-->
+    <header class="header_area">
+        <div class="top_menu row m0">
+            <div class="container">
+                <div class="float-left">
+                    <a href="mailto:support@colorlib.com">support@abc.com</a>
+                    <a href="#">Welcome to Shop</a>
+                </div>
+                <div class="float-right">
+                    <ul class="header_social">
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="main_menu">
+            <nav class="navbar navbar-expand-lg navbar-light main_box">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <a class="navbar-brand logo_h" href="/Home"><img src="~/Content/homepage/img/logo.png" alt=""></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav menu_nav ml-auto">
+                            <li class="nav-item active"><a class="nav-link nav-text" href="/Home">Home</a></li>
+                            <li class="nav-item"><a class="nav-link nav-text" href="/Category">Category</a></li>
+
+                            <li class="nav-item"><a href="/Home/Blog" class="nav-link nav-text">Blog</a></li>
+
+                            <li class="nav-item"><a class="nav-link nav-text" href="/Home/Contact">Contact</a></li>
+                            <li class="nav-item"><a class="nav-link nav-text" href="/Home/Login">Login</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="nav-item">
+                                <a href="/ShoppingCart" class="cart">
+                                    <i class="lnr lnr lnr-cart" style="font-size:20px"></i>
+                                    <span class="cart-icon-quantity">0</span>
+                                </a>
+                            </li>
+                            <li class="nav-item"><a href="#" class="search"><i style="font-size:20px" class="lnr lnr-magnifier"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!--================Header Menu Area =================-->
+
+
+    @RenderBody()
+
+
+    <!--MODAL-->
+    <div class="modal fade" id="buy-confirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="modal-buy-body">Add to Cart success!!</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                    <a href="/ShoppingCart" class="btn btn-danger" >View Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--================ start footer Area  =================-->
+    <footer class="footer-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3  col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6 class="footer_title">About Us</h6>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore magna aliqua.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6 class="footer_title">Newsletter</h6>
+                        <p>Stay updated with our latest trends</p>
+                        <div id="mc_embed_signup">
+                            <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get" class="subscribe_form relative">
+                                <div class="input-group d-flex flex-row">
+                                    <input name="EMAIL" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address '" required="" type="email">
+                                    <button class="btn sub-btn"><span class="lnr lnr-arrow-right"></span></button>
+                                </div>
+                                <div class="mt-10 info"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="single-footer-widget instafeed">
+                        <h6 class="footer_title">Instagram Feed</h6>
+                        <ul class="list instafeed d-flex flex-wrap">
+                            <li><img src="~/Content/homepage/img/instagram/Image-01.jpg" alt=""></li>
+                            <li><img src="~/Content/homepage/img/instagram/Image-02.jpg" alt=""></li>
+                            <li><img src="~/Content/homepage/img/instagram/Image-03.jpg" alt=""></li>
+                            <li><img src="~/Content/homepage/img/instagram/Image-04.jpg" alt=""></li>
+                            <li><img src="~/Content/homepage/img/instagram/Image-05.jpg" alt=""></li>
+                            <li><img src="~/Content/homepage/img/instagram/Image-06.jpg" alt=""></li>
+                            <li><img src="~/Content/homepage/img/instagram/Image-07.jpg" alt=""></li>
+                            <li><img src="~/Content/homepage/img/instagram/Image-08.jpg" alt=""></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-6">
+                    <div class="single-footer-widget f_social_wd">
+                        <h6 class="footer_title">Follow Us</h6>
+                        <p>Let us be social</p>
+                        <div class="f_social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-dribbble"></i></a>
+                            <a href="#"><i class="fa fa-behance"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row footer-bottom d-flex justify-content-between align-items-center">
+                <p class="col-lg-12 footer-text text-center">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;
+                    <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
+            </div>
+        </div>
+    </footer>
+    <!--================ End footer Area  =================-->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+
+
+
+    <script src="~/Content/homepage/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/homepage/js/popper.js"></script>
+    <script src="~/Content/homepage/js/bootstrap.min.js"></script>
+    <script src="~/Content/homepage/js/stellar.js"></script>
+    <script src="~/Content/homepage/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="~/Content/homepage/vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="~/Content/homepage/vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Content/homepage/vendors/isotope/isotope-min.js"></script>
+    <script src="~/Content/homepage/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/Content/homepage/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/Content/homepage/js/mail-script.js"></script>
+    <script src="~/Content/homepage/vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="~/Content/homepage/vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="~/Content/homepage/vendors/counter-up/jquery.counterup.js"></script>
+    <script src="~/Content/homepage/js/theme.js"></script>
+    @RenderSection("scripts", required: false)
+    <script src="~/Content/homepage/js/format-data.js"></script>
+    <script src="~/Content/homepage/js/common.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            jQuery.ajax({
+                url: "ShoppingCart/TotalQuantity",
+                method: 'GET',
+            }).done(function (data) {
+                jQuery('.cart-icon-quantity').text(data.TotalQuantity)
+            })
+        })
+    </script>
+</body>
+</html>

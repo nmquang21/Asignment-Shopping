@@ -1,0 +1,225 @@
+﻿@model IEnumerable<Assignment_NET.Models.Student>
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var totalPage = ViewBag.TotalPage;
+    var currentPage = ViewBag.CurrentPage as int?;
+    var limit = ViewBag.Limit as int?;
+}
+
+<h2>View</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div>
+    <input type="text" name="datefilter" value="" class="form-control" style="margin-bottom:10px"/>
+</div>
+<div id="chart_div"></div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Note)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Birthday)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                <img width="100" height="100" src="@(item.Image)" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Birthday)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.RollNumber }) |
+                @Html.ActionLink("Details", "Details", new { id = item.RollNumber }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.RollNumber })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+@if (totalPage > 0)
+{
+    <b>Page @currentPage of @totalPage</b>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @if (currentPage > 1)
+            {
+                <li>
+                    <a href="?page=1&limit=@limit" aria-label="Previous">
+                        <span aria-hidden="true">First</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="?page=@(currentPage-1)&limit=@limit" aria-label="Previous">
+                        <span aria-hidden="true">Previous</span>
+                    </a>
+                </li>
+            }
+            @if (currentPage > 2)
+            {
+                <li>
+                    <a href="?page=@(currentPage-2)&limit=@limit" aria-label="Previous">
+                        <span aria-hidden="true">@(currentPage - 2)</span>
+                    </a>
+                </li>
+            }
+            @if (currentPage > 1)
+            {
+                <li>
+                    <a href="?page=@(currentPage-1)&limit=@limit" aria-label="Previous">
+                        <span aria-hidden="true">@(currentPage - 1)</span>
+                    </a>
+                </li>
+            }
+            <li>
+                <a href="?page=@(currentPage)&limit=@limit" aria-label="Previous" style="color:red">
+                    <span aria-hidden="true">@(currentPage)</span>
+                </a>
+            </li>
+            @if (currentPage < totalPage)
+            {
+                <li>
+                    <a href="?page=@(currentPage+1)&limit=@limit" aria-label="Previous">
+                        <span aria-hidden="true">@(currentPage + 1)</span>
+                    </a>
+                </li>
+            }
+            @if (currentPage <totalPage-1)
+            {
+                <li>
+                    <a href="?page=@(currentPage+2)&limit=@limit" aria-label="Previous">
+                        <span aria-hidden="true">@(currentPage + 2 )</span>
+                    </a>
+                </li>
+            }
+            @if (currentPage < totalPage)
+            {
+                <li>
+                    <a href="?page=@(currentPage+1)&limit=@limit" aria-label="Previous">
+                        <span aria-hidden="true">Next</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="?page=@(totalPage)&limit=@limit" aria-label="Previous">
+                        <span aria-hidden="true">Last</span>
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </nav>
+}
+
+@section scripts{
+    <script type="text/javascript">
+        var currentUrl = window.location.href;
+        var baseUrl = window.location.href.split('?')[0];
+
+
+        google.charts.load('current', {packages: ['corechart', 'line']});
+        google.charts.setOnLoadCallback(drawBackgroundColor);
+
+        function drawBackgroundColor() {
+          var data = new google.visualization.DataTable();
+          data.addColumn('date', 'Date');
+            data.addColumn('number', 'Student');
+            $.ajax({
+                url: '/Student/GetChartData',
+                method: 'GET',
+            }).done(function (result) {
+                $.each(result, function (index, item) {
+                    var date = new Date(item.Date);
+                    var field = [new Date(item.Date), item.Count];
+                    data.addRows([field]);
+                })
+                //chart.clearChart();
+                chart.draw(data, options);
+            })
+            
+
+          var options = {
+            hAxis: {
+              title: 'Time'
+            },
+            vAxis: {
+              title: 'Student'
+            },
+            backgroundColor: '#f1f8e9'
+          };
+
+          var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+          //chart.draw(data, options);
+        }
+
+        $(function () {
+            $('input[name="datefilter"]').daterangepicker({
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear'
+                }
+            });
+            $('input[name="datefilter"]').on('apply.daterangepicker', function (ev, picker) {
+                window.location.href = baseUrl + "?start=" + picker.startDate.format('YYYY-MM-DD') +"&end=" + picker.endDate.format('YYYY-MM-DD');
+                //$.ajax({
+                //    url: '/Student/GetChartData',
+                //    method: 'GET',
+                //}).done(function (result) {
+                //    $.each(result, function (index, item) {
+                //        var date = new Date(item.Date);
+                //        var field = [new Date(item.Date), item.Count];
+                //        data.addRows([field]);
+                //    })
+                //    chart.draw(data, options);
+                //})
+                //alert(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+                // data.addRows([
+                //    [new Date(2019, 12, 1), 5],
+                //    [new Date(2019, 12, 2), 12],
+                //    [new Date(2019, 12, 3), 20],
+                //    [new Date(2019, 12, 4), 28],
+                //    [new Date(2019, 12, 5), 11],
+                //    [new Date(2019, 12, 6), 13],
+                //    [new Date(2019, 12, 7), 2],
+                //    [new Date(2019,12,8),12],
+                // ]);
+                 
+                //chart.draw(data, options);
+            });
+            $('input[name="datefilter"]').on('cancel.daterangepicker', function (ev, picker) {
+                alert(window.location.href);
+            });
+        });
+   
+        
+    </script>
+}

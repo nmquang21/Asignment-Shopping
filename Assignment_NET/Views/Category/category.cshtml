@@ -1,0 +1,357 @@
+﻿@model IEnumerable<Assignment_NET.Models.Product>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Shop";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var totalPage = ((int?)ViewBag.TotalPage).Value;
+    var currentPage = ((int?)ViewBag.CurrentPage).Value;
+    var limit = ((int?)ViewBag.Limit).Value;
+    var currentPara = "&cid=" + ViewBag.Cid;
+    var categoryName = ViewBag.categoryName != null ? ViewBag.categoryName : "";
+    //+ "&sort=" + ViewBag.Sort;
+}
+
+<!--================Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content text-center">
+                <h2>Shop Category @categoryName</h2>
+                <div class="page_link">
+                    <a href="/Home">Home</a>
+                    <a href="/Category">Category</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Home Banner Area =================-->
+<!--================Category Product Area =================-->
+<section class="cat_product_area p_120">
+    <div class="container">
+        <div class="row flex-row-reverse">
+            <div class="col-lg-9">
+                <div class="product_top_bar">
+                    <div class="left_dorp">
+                        <select class="sorting">
+                            <option value="1">Default sorting</option>
+                            <option value="2">Sort By Name</option>
+                            <option value="4">Sort By Price</option>
+                        </select>
+                        <select class="show" value="@ViewBag.Limit">                          
+                            <option value="6">Show 6</option>
+                            <option value="9">Show 9</option>
+                            <option value="12">Show 12</option>
+                            <option value="18">Show 18</option>
+                            <option value="24">Show 24</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="latest_product_inner row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <div class="f_p_item">
+                                <div class="f_p_img">
+                                    <img class="img-fluid" src="@item.Image" alt="">
+                                    <div class="p_icon">
+                                        <a href="@item.Id"><i class="lnr lnr-heart"></i></a>
+                                        @*<a href="/ShoppingCart/AddToCart?productId=@item.Id&quantity=1"><i class="lnr lnr-cart"></i></a>*@
+                                        <a style="cursor:pointer" id="@item.Id" class="add-to-cart"><i class="lnr lnr-cart"></i></a>
+                                    </div>
+                                </div>
+                                <a href="/Product/Detail/@item.Id"><h4>@item.Name</h4></a>
+                                <h5 class="text-danger format-money">@item.Price</h5>
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+
+                @*<nav class="cat_page" aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item"><a class="page-link" href="#"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a></li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item blank"><a class="page-link" href="#">...</a></li>
+                                <li class="page-item"><a class="page-link" href="#">6</a></li>
+                                <li class="page-item"><a class="page-link" href="#"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </nav>
+                    </div>*@
+
+
+                <br />
+                @if (totalPage > 1)
+                {
+                    <div class="text-center mt-4 text-warning">Page @currentPage of @totalPage</div>
+                    <div class="d-flex justify-content-center">
+
+                        <nav class="cat_page" aria-label="Page navigation example">
+                            <ul class="pagination">
+                                @if (currentPage > 1)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=1&limit=@(limit)@(currentPara)" aria-label="First">
+                                            <span aria-hidden="true">First</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=@(currentPage-1)&limit=@(limit)@(currentPara)" aria-label="Previous">
+                                            <span aria-hidden="true"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (currentPage > 2)
+                                {
+                                    <li class="page-item"><a class="page-link" href="?page=@(currentPage-2)&limit=@(limit)@(currentPara)">@(currentPage - 2)</a></li>
+                                }
+                                @if (currentPage > 1)
+                                {
+                                    <li class="page-item"><a class="page-link" href="?page=@(currentPage-1)&limit=@(limit)@(currentPara)">@(currentPage - 1)</a></li>
+                                }
+                                <li class="active"><a class="page-link" href="?page=@(currentPage)&limit=@(limit)@(currentPara)">@currentPage</a></li>
+                                @if (totalPage - currentPage > 0)
+                                {
+                                    <li class="page-item"><a class="page-link" href="?page=@(currentPage+1)&limit=@(limit)@(currentPara)">@(currentPage + 1)</a></li>
+                                }
+                                @if (totalPage - currentPage > 1)
+                                {
+                                    <li class="page-item"><a class="page-link" href="?page=@(currentPage+2)&limit=@(limit)@(currentPara)">@(currentPage + 2)</a></li>
+                                }
+                                @if (currentPage < totalPage)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=@(currentPage+1)&limit=@(limit)@(currentPara)" aria-label="Next">
+                                            <span aria-hidden="true"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=@totalPage&limit=@(limit)@(currentPara)" aria-label="Next">
+                                            <span aria-hidden="true">Last</span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                }
+
+
+
+
+            </div>
+
+            <div class="col-lg-3">
+                <div class="left_sidebar_area">
+                    <aside class="left_widgets cat_widgets">
+                        <div class="l_w_title">
+                            <h3>Browse Categories</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list">
+                                @foreach (var item in ViewBag.Categories)
+                                {
+                                    <li><a href="/Category?name=@item.Name&cid=@item.Id">@item.Name</a></li>
+                                }
+
+
+
+                            </ul>
+                        </div>
+                    </aside>
+                    @*<aside class="left_widgets p_filter_widgets">
+                            <div class="l_w_title">
+                                <h3>Product Filters</h3>
+                            </div>
+                            <div class="widgets_inner">
+                                <h4>Brand</h4>
+                                <ul class="list">
+                                    <li><a href="#">Apple</a></li>
+                                    <li><a href="#">Asus</a></li>
+                                    <li class="active"><a href="#">Gionee</a></li>
+                                    <li><a href="#">Micromax</a></li>
+                                    <li><a href="#">Samsung</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="widgets_inner">
+                                <h4>Price</h4>
+                                <div class="range_item">
+                                    <div id="slider-range"></div>
+                                    <div class="row m0">
+                                        <label for="amount">Price : </label>
+                                        <input type="text" id="amount" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Category Product Area =================-->
+<!--================Most Product Area =================-->
+<section class="most_product_area most_p_withoutbox">
+    <div class="container">
+        <div class="main_title">
+            <h2>Most Searched Products</h2>
+            <p>Who are in extremely love with eco friendly system.</p>
+        </div>
+        <div class="row most_product_inner">
+            <div class="col-lg-3 col-sm-6">
+                <div class="most_p_list">
+                    <div class="media">
+                        <div class="d-flex">
+                            <img src="~/Content/homepage/img/product/most-product/m-product-1.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <a href="#"><h4>Black lace Heels</h4></a>
+                            <h3>$189.00</h3>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="d-flex">
+                            <img src="~/Content/homepage/img/product/most-product/m-product-2.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <a href="#"><h4>Black lace Heels</h4></a>
+                            <h3>$189.00</h3>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="d-flex">
+                            <img src="~/Content/homepage/img/product/most-product/m-product-3.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <a href="#"><h4>Black lace Heels</h4></a>
+                            <h3>$189.00</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="most_p_list">
+                    <div class="media">
+                        <div class="d-flex">
+                            <img src="~/Content/homepage/img/product/most-product/m-product-4.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <a href="#"><h4>Black lace Heels</h4></a>
+                            <h3>$189.00</h3>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="d-flex">
+                            <img src="~/Content/homepage/img/product/most-product/m-product-5.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <a href="#"><h4>Black lace Heels</h4></a>
+                            <h3>$189.00</h3>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="d-flex">
+                            <img src="~/Content/homepage/img/product/most-product/m-product-6.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <a href="#"><h4>Black lace Heels</h4></a>
+                            <h3>$189.00</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="most_p_list">
+                    <div class="media">
+                        <div class="d-flex">
+                            <img src="~/Content/homepage/img/product/most-product/m-product-7.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <a href="#"><h4>Black lace Heels</h4></a>
+                            <h3>$189.00</h3>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="d-flex">
+                            <img src="~/Content/homepage/img/product/most-product/m-product-8.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <a href="#"><h4>Black lace Heels</h4></a>
+                            <h3>$189.00</h3>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="d-flex">
+                            <img src="~/Content/homepage/img/product/most-product/m-product-9.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <a href="#"><h4>Black lace Heels</h4></a>
+                            <h3>$189.00</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="most_p_list">
+                    <div class="media">
+                        <div class="d-flex">
+                            <img src="~/Content/homepage/img/product/most-product/m-product-10.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <a href="#"><h4>Black lace Heels</h4></a>
+                            <h3>$189.00</h3>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="d-flex">
+                            <img src="~/Content/homepage/img/product/most-product/m-product-11.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <a href="#"><h4>Black lace Heels</h4></a>
+                            <h3>$189.00</h3>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="d-flex">
+                            <img src="~/Content/homepage/img/product/most-product/m-product-12.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <a href="#"><h4>Black lace Heels</h4></a>
+                            <h3>$189.00</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Most Product Area =================-->
+@section scripts{
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            
+            jQuery('.show').change(function () {
+                var showItem = jQuery(this).val();
+                var urlString = window.location.href;
+                var url = new URL(urlString);
+               
+                var search_params = new URLSearchParams(url.search); 
+
+                // new value of "limit" 
+                search_params.set('limit', showItem);
+
+                // change the search property of the main url
+                url.search = search_params.toString();
+
+                // the new url string
+                var new_url = url.toString();
+                window.location.href = new_url;
+            });
+        })
+    </script>
+}

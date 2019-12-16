@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="MyContext-Web.config Connection String" description="MyContext Connection String used in web.config by the application to access the database." defaultValue="data source=210.245.95.62;initial catalog=T1807E_TH1807056_NguyenMinhQuang;persist security info=True;user id=sa;password=z@GH7ytQ;MultipleActiveResultSets=True;App=EntityFramework" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="E:\\APTECH\\Sem3\\ASP\.NET\ MVC\\Assignment_NET\\Assignment_NET\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='MyContext']/@connectionString" />
+  </parameter>
+</parameters>
